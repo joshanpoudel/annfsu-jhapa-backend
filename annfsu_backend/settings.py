@@ -174,6 +174,11 @@ JAZZMIN_SETTINGS = {
         {"model": "news.News"},
         {"model": "news.Songs"},
         {"model": "authentication.User"},
+        {
+            "name": "Developer: Nishant Sapkota",
+            "url": "https://snishant.com.np",
+            "new_window": True,
+        },
     ],
     "icons": {
         "authentication.User": "fa-solid fa-user",
@@ -192,7 +197,7 @@ JAZZMIN_SETTINGS = {
         "news.News",
         "news.Songs",
     ],
-    "show_ui_builder": True,
+    "use_google_fonts_cdn": True,
     "navigation_expanded": True,
     "changeform_format": "single",
     "changeform_format_overrides": {
