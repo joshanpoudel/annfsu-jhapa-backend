@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "authentication",
     "members",
     "news",
-    "blood_donors"
+    "blood_donors",
 ]
 
 MIDDLEWARE = [
@@ -125,7 +125,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIR = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -154,4 +156,55 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+JAZZMIN_SETTINGS = {
+    "site_title": "ANNFSU Jhapa",
+    "site_header": "ANNFSU Jhapa",
+    "site_brand": "ANNFSU",
+    "site_logo": "logo.png",
+    "welcome_sign": "Welcome to the ANNFSU Jhapa Administration Portal",
+    "copyright": "© ANNFSU Jhapa",
+    "search_model": "blood_donors.BloodDonor",
+    "user_avatar": "profile_picture",
+    "theme": "superhero",
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"model": "blood_donors.BloodDonor"},
+        {"model": "news.News"},
+        {"model": "news.Songs"},
+        {"model": "authentication.User"},
+    ],
+    "icons": {
+        "authentication.User": "fa-solid fa-user",
+        "auth.Group": "fa fa-users",
+        "authentication.BlacklistedToken": "fas fa-ban",
+        "blood_donors.BloodDonor": "fas fa-tint",
+        "news.Songs": "fas fa-music",
+        "news.News": "fas fa-newspaper",
+    },
+    "hide_models": ["authentication.BlacklistedToken"],
+    "order_with_respect_to": [
+        "authentication",
+        "blood_donors",
+        "news",
+        "blood_donors.BloodDonor",
+        "news.News",
+        "news.Songs",
+    ],
+    "show_ui_builder": True,
+    "navigation_expanded": True,
+    "changeform_format": "single",
+    "changeform_format_overrides": {
+        "blood_donors.BloodDonor": "horizontal_tabs",
+        "news.News": "collapsible",
+        "news.Songs": "collapsible",
+    },
+    "custom_css": "css/custom_admin.css",
+    "custom_js": None,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "superhero",
+    "dark_mode_theme": "superhero",
 }
