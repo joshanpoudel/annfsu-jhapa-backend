@@ -1,6 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.request import Request
 
 from authentication.models import User
@@ -12,7 +11,7 @@ class MembersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request):
-        users = User.objects.all()
+        users = User.objects.filter()
 
         serializer = UserSerializer(instance=users, many=True)
 

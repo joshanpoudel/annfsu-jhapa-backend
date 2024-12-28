@@ -5,6 +5,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from .models import User
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -81,7 +82,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+from rest_framework import serializers
+from .models import User
+from versatileimagefield.serializers import VersatileImageFieldSerializer
+
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__400x400'),
+            ('small_square_crop', 'crop__50x50')
+        ]
+    )
+
     class Meta:
         model = User
         fields = (
@@ -96,6 +110,7 @@ class UserSerializer(serializers.ModelSerializer):
             "position",
             "profile_picture",
         )
+
 
 
 class UpdateProfilePictureSerializer(serializers.ModelSerializer):
