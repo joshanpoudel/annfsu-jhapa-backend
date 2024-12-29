@@ -11,7 +11,7 @@ class MembersView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request):
-        users = User.objects.filter()
+        users = User.objects.filter(is_staff=False, is_superuser=False)
 
         serializer = UserSerializer(instance=users, many=True)
 

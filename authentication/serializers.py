@@ -114,6 +114,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UpdateProfilePictureSerializer(serializers.ModelSerializer):
+    profile_picture = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'),
+            ('medium_square_crop', 'crop__400x400'),
+            ('small_square_crop', 'crop__50x50')
+        ]
+    )
+    
     class Meta:
         model = User
         fields = ("profile_picture",)
