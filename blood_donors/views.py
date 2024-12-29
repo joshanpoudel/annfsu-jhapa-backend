@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from django.db.models import Q
 
+from core.response import CustomResponse
+
 
 from .serializers import BloodDonorSerializer
 from .pagination import BloodDonorPagination
@@ -18,7 +20,7 @@ class BloodDonorView(APIView):
         blood_group = request.query_params.get("blood_group", None)
         location = request.query_params.get("location", None)
 
-        donors = BloodDonor.objects.all().order_by("id")
+        donors = BloodDonor.objects.all().order_by("full_name")
 
         query = Q()
         if full_name:
@@ -33,10 +35,9 @@ class BloodDonorView(APIView):
 
         donors = donors.filter(query)
 
-        paginator = BloodDonorPagination()
-        paginated_donors = paginator.paginate_queryset(donors, request)
 
-        serializer = BloodDonorSerializer(instance=paginated_donors, many=True)
-        return paginator.get_paginated_response(
-            {"data": serializer.data, "message": "Blood donors fetched successfully!"}
+        serializer = BloodDonorSerializer(instance=donors, many=True)
+        return CustomResponse.success(
+            data=serializer.data,
+            message="Blood donors fetched successfully!"
         )
