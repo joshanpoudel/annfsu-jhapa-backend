@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "members",
     "news",
     "blood_donors",
+    "notification",
 ]
 
 MIDDLEWARE = [

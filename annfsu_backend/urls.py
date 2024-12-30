@@ -25,7 +25,8 @@ urlpatterns = [
     path("api/auth/", include("authentication.urls")),
     path("api/members/", include("members.urls")),
     path("api/news/", include("news.urls")),
-    path("api/blood-donors/", include("blood_donors.urls"))
+    path("api/blood-donors/", include("blood_donors.urls")),
+    path("api/notification/", include("notification.urls"))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

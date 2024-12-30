@@ -75,6 +75,8 @@ class User(AbstractUser):
     width = models.PositiveIntegerField(blank=True, null=True)
     height = models.PositiveIntegerField(blank=True, null=True)
 
+    fcm_token = models.TextField(blank=True, null=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
