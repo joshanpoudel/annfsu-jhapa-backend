@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+import firebase_admin
 from pathlib import Path
 from datetime import timedelta
+from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -214,3 +216,9 @@ JAZZMIN_UI_TWEAKS = {
     "theme": "superhero",
     "dark_mode_theme": "superhero",
 }
+
+FIREBASE_CREDENTIALS_FILE = "core/config/firebase/serviceAccountKey.json"
+
+if not firebase_admin._apps:
+    cred = credentials.Certificate(FIREBASE_CREDENTIALS_FILE)
+    firebase_admin.initialize_app(cred)

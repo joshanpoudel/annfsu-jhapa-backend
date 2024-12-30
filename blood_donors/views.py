@@ -3,12 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from django.db.models import Q
 
+from core.notification import notify_user
 from core.response import CustomResponse
 
 
-from .serializers import BloodDonorSerializer
-from .pagination import BloodDonorPagination
+from .serializers import BloodDonorSerializer, BloodRequestSerializer
 from .models import BloodDonor
+from authentication.models import User
 
 
 class BloodDonorView(APIView):
@@ -35,9 +36,34 @@ class BloodDonorView(APIView):
 
         donors = donors.filter(query)
 
-
         serializer = BloodDonorSerializer(instance=donors, many=True)
         return CustomResponse.success(
-            data=serializer.data,
-            message="Blood donors fetched successfully!"
+            data=serializer.data, message="Blood donors fetched successfully!"
         )
+
+
+class BloodRequestView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request):
+        serializer = BloodRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        users = User.objects.all()
+
+        filtered_users = [user for user in users if user.id != request.user.id]
+
+        full_name = serializer.data.get("full_name")
+        phone = serializer.data.get("phone_number")
+        blood_group = serializer.data.get("blood_group")
+        address = serializer.data.get("address")
+
+        for user in filtered_users:
+            print(user)
+            notify_user(
+                user,
+                "Blood Donation Request",
+                f"Name: {full_name}\nPhone: {phone}\nBlood Group: {blood_group}\nAddress: {address}",
+            )
+
+        return CustomResponse.success(message="Blood request submitted successfully!")

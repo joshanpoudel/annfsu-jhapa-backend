@@ -16,3 +16,9 @@ class BloodDonorSerializer(serializers.ModelSerializer):
             "location",
             "email_address",
         ]
+
+class BloodRequestSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
+    phone_number = serializers.CharField()
+    blood_group = serializers.CharField()
+    address = serializers.CharField()
