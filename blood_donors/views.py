@@ -10,6 +10,7 @@ from core.response import CustomResponse
 from .serializers import BloodDonorSerializer, BloodRequestSerializer
 from .models import BloodDonor
 from authentication.models import User
+from notification.models import Notification
 
 
 class BloodDonorView(APIView):
@@ -58,12 +59,16 @@ class BloodRequestView(APIView):
         blood_group = serializer.data.get("blood_group")
         address = serializer.data.get("address")
 
+        body = f"Name: {full_name}\nPhone: {phone}\nBlood Group: {blood_group}\nAddress: {address}"
+
+        Notification.objects.create(title="Blood Donation Request", body=body)
+
         for user in filtered_users:
             print(user)
             notify_user(
                 user,
                 "Blood Donation Request",
-                f"Name: {full_name}\nPhone: {phone}\nBlood Group: {blood_group}\nAddress: {address}",
+                body,
             )
 
         return CustomResponse.success(message="Blood request submitted successfully!")
