@@ -72,8 +72,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "contact_number",
             "address",
             "college_name",
-            "position",
-            "profile_picture",
+            "position"
         )
 
     def create(self, validated_data: dict) -> User:
