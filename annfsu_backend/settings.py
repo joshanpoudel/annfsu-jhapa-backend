@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "news",
     "blood_donors",
     "notification",
+    "team"
 ]
 
 MIDDLEWARE = [
@@ -209,7 +210,7 @@ JAZZMIN_SETTINGS = {
         "news.Songs": "collapsible",
     },
     "custom_css": "css/custom_admin.css",
-    "custom_js": None,
+    "custom_js": "js/custom_js.js",
 }
 
 JAZZMIN_UI_TWEAKS = {
